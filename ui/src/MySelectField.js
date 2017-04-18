@@ -6,7 +6,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 export const renderMenuItem = value => {
-    return (<MenuItem value={value.toLowerCase()} primaryText={value}/>);
+    return (<MenuItem key={value} value={value} primaryText={value}/>);
 }
 
 export const renderMenuItems = values => {
@@ -20,8 +20,8 @@ export const MySelectField = props => {
             <SelectField
                 key={props.info}
                 floatingLabelText={props.info}
-                value={props.defaultVal}
-                andler={props.handler}
+                value={props.value}
+                onChange={props.handler}
             >
                 {myMenuItems}
             </SelectField>

@@ -15,8 +15,6 @@ import img_recv from '../public/receive.svg';
 import img_heartbeat from '../public/heartbeat.svg';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import {LineChart, Line, XAxis, YAxis, Tooltip, Legend} from 'recharts'
 import {MySelectField} from './MySelectField'
 
@@ -39,13 +37,12 @@ class App extends Component {
         injectTapEventPlugin();
 
         this.state = {
-            scenario_type: 'simple',
-            time_limit: 10,
-            producer_count: 1,
-            consumer_count: 1,
-            message_size: 100,
+            'type': 'simple',
+            'time-limit': 10,
+            'producer-count': 1,
+            'consumer-count': 1,
+            'min-msg-size': 100,
             running: false,
-            errorText: "",
             indicator: "hide",
             result: [],
             send_bytes_rate: 0,
@@ -54,76 +51,14 @@ class App extends Component {
             recv_msg_rate: 0,
             avg_latency: 0
         };
-        this.samples = [{
-            "elapsed": 1000,
-            "send-bytes-rate": 0.0,
-            "recv-msg-rate": 53861.0,
-            "max-latency": 810633,
-            "min-latency": 1470,
-            "avg-latency": 511647,
-            "send-msg-rate": 102976.0,
-            "recv-bytes-rate": 0.0
-        }, {
-            "elapsed": 2000,
-            "send-bytes-rate": 0.0,
-            "recv-msg-rate": 98795.0,
-            "max-latency": 1442540,
-            "min-latency": 738848,
-            "avg-latency": 1098951,
-            "send-msg-rate": 57454.0,
-            "recv-bytes-rate": 0.0
-        }, {
-            "elapsed": 3000,
-            "send-bytes-rate": 0.0,
-            "recv-msg-rate": 101022.0,
-            "max-latency": 2104441,
-            "min-latency": 445579,
-            "avg-latency": 1449189,
-            "send-msg-rate": 32084.0,
-            "recv-bytes-rate": 0.0
-        }, {
-            "elapsed": 4000,
-            "send-bytes-rate": 0.0,
-            "recv-msg-rate": 92233.0,
-            "max-latency": 2581828,
-            "min-latency": 611305,
-            "avg-latency": 1614334,
-            "send-msg-rate": 59205.0,
-            "recv-bytes-rate": 0.0
-        }, {
-            "elapsed": 5000,
-            "send-bytes-rate": 0.0,
-            "recv-msg-rate": 109659.0,
-            "max-latency": 2538161,
-            "min-latency": 625559,
-            "avg-latency": 1432968,
-            "send-msg-rate": 45582.0,
-            "recv-bytes-rate": 0.0
-        }, {
-            "elapsed": 6000,
-            "send-bytes-rate": 0.0,
-            "recv-msg-rate": 114755.0,
-            "max-latency": 2164841,
-            "min-latency": 516923,
-            "avg-latency": 1335304,
-            "send-msg-rate": 5885.0,
-            "recv-bytes-rate": 0.0
-        }];
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.visualization = this.visualization.bind(this);
-        this.validate = this.validate.bind(this);
 
-        this.scenario_types = ["simple", "rate-vs-latency", "varying"];
+        this.scenario_types = ["simple"];
         this.time_limits = [10, 30, 60, 120, 180, 240, 300];
         this.worker_counts = [1, 2, 3, 4, 5, 6, 7, 8];
         this.message_sizes = [100, 200, 500, 1000, 2000, 5000];
 
-        this.handleTypeChange = this.handleTypeChange.bind(this);
-        this.handleTimeChange = this.handleTimeChange.bind(this);
-        this.handleProducerCountChange = this.handleProducerCountChange.bind(this);
-        this.handleConsumerCountChange = this.handleConsumerCountChange.bind(this);
-        this.handleMessageSizeChange = this.handleMessageSizeChange.bind(this);
-        this.handletest = this.handletest.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.visualization = this.visualization.bind(this);
     }
 
     componentDidMount() {
@@ -131,6 +66,8 @@ class App extends Component {
             {route: '/topic/taskstatus', callback: this.visualization},
         ]);
     }
+
+    handleOnChange = (id, event, index, value) => this.setState({[id]: value});
 
     visualization(message) {
         let component = this
@@ -146,19 +83,15 @@ class App extends Component {
         console.log(this.state.result);
     }
 
-    handletest(event, index, value){
-        console.log(value);
-    }
-
     handleSubmit(e) {
         let component = this;
         axios.post('http://localhost:8080/submit', {
-            'name': 'test', 'type': this.state.scenario_type,
+            'name': 'test', 'type': this.state['type'],
             'params': [{
-                'time-limit': this.state.time_limit,
-                'producer-count': this.state.producer_count,
-                'consumer-count': this.state.consumer_count,
-                'min-msg-size': this.state.message_size
+                'time-limit': this.state['time-limit'],
+                'producer-count': this.state['producer-count'],
+                'consumer-count': this.state['consumer-count'],
+                'min-msg-size': this.state['min-msg-size']
             }]
         })
             .then(function (response) {
@@ -171,32 +104,7 @@ class App extends Component {
         e.preventDefault();
     }
 
-    validate(event) {
-        let component = this;
-        if (event.target.value) {
-            try {
-                JSON.parse(event.target.value.trim());
-                this.setState({value: event.target.value});
-            } catch (e) {
-                component.setState({errorText: "Please fill in a valid JSON"});
-                return
-            }
-        }
-        component.setState({errorText: ""});
-    }
-
-    menuItemGenerator(value) {
-        return <MenuItem value={value} primaryText={value}/>
-    };
-
-    handleTypeChange = (event, index, scenario_type) => this.setState({scenario_type});
-    handleTimeChange = (event, index, time_limit) => this.setState({time_limit});
-    handleProducerCountChange = (event, index, producer_count) => this.setState({producer_count});
-    handleConsumerCountChange = (event, index, consumer_count) => this.setState({consumer_count});
-    handleMessageSizeChange = (event, index, message_size) => this.setState({message_size});
-
     render() {
-        let component = this;
         return (
             <MuiThemeProvider muiTheme={getMuiTheme()}>
                 <div id="hehe">
@@ -204,41 +112,21 @@ class App extends Component {
                         <img src={logo} className="App-logo" alt="logo"/>
                         <h2>Welcome to React</h2>
                     </div>
-                    <SelectField
-                        floatingLabelText="Scenario Type"
-                        value={this.state.scenario_type}
-                        onChange={this.handleTypeChange}
-                    >
-                        {component.scenario_types.map(this.menuItemGenerator)}
-                    </SelectField>
-                    <SelectField
-                        floatingLabelText="Time Limit (second)"
-                        value={this.state.time_limit}
-                        onChange={this.handleTimeChange}
-                    >
-                        {component.time_limits.map(this.menuItemGenerator)}
-                    </SelectField>
-                    <SelectField
-                        floatingLabelText="Number of Producer"
-                        value={this.state.producer_count}
-                        onChange={this.handleProducerCountChange}
-                    >
-                        {component.worker_counts.map(this.menuItemGenerator)}
-                    </SelectField>
-                    <SelectField
-                        floatingLabelText="Number of Consumer"
-                        value={this.state.consumer_count}
-                        onChange={this.handleConsumerCountChange}
-                    >
-                        {component.worker_counts.map(this.menuItemGenerator)}
-                    </SelectField>
-                    <SelectField
-                        floatingLabelText="Message Size (byte)"
-                        value={this.state.message_size}
-                        onChange={this.handleMessageSizeChange}
-                    >
-                        {component.message_sizes.map(this.menuItemGenerator)}
-                    </SelectField>
+                    <MySelectField info='Scenario Type' id='type' value={this.state['type']}
+                                   handler={this.handleOnChange.bind(this, 'type')}
+                                   values={this.scenario_types}/>
+                    <MySelectField info='Time Limit (second)' id='time-limit' value={this.state['time-limit']}
+                                   handler={this.handleOnChange.bind(this, 'time-limit')}
+                                   values={this.time_limits}/>
+                    <MySelectField info='Number of Producer' id='producer-count' value={this.state['producer-count']}
+                                   handler={this.handleOnChange.bind(this, 'producer-count')}
+                                   values={this.worker_counts}/>
+                    <MySelectField info='Number of Consumer' id='consumer-count' value={this.state['consumer-count']}
+                                   handler={this.handleOnChange.bind(this, 'consumer-count')}
+                                   values={this.worker_counts}/>
+                    <MySelectField info='Message Size (byte)' id='min-msg-size' value={this.state['min-msg-size']}
+                                   handler={this.handleOnChange.bind(this, 'min-msg-size')}
+                                   values={this.message_sizes}/>
                     <RaisedButton label="Submit" primary={true} onClick={this.handleSubmit}
                                   disabled={this.state.running}/>
                     <div>
@@ -319,8 +207,7 @@ class App extends Component {
                         </Tab>
                     </Tabs>
                     <div>
-                        <MySelectField info="hello" value="hellovalue" handler={this.handletest}
-                                       values={["HelloVAL1", "hELLOVaL2", "HelloVAL4", "HelloVAL3"]} />
+
                     </div>
                 </div>
             </MuiThemeProvider>
