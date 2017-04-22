@@ -42,11 +42,6 @@ public class PerfTaskController {
         this.gson = gson;
     }
 
-    @RequestMapping(value = "/")
-    public String index() {
-        return "index.html";
-    }
-
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     @CrossOrigin
     public String taskSubmission(@RequestBody String scenarioStr) {
@@ -67,19 +62,6 @@ public class PerfTaskController {
         webSocket.convertAndSend("/topic/status","Task " + taskID + " submitted!");
         return taskID;
     }
-
-//    @MessageMapping(value = "/status")
-//    @SendTo("/topic/taskstatus")
-//    @CrossOrigin
-//    public String taskStatus(){
-//        while(!this.runningTask.isCancelled() && !this.runningTask.isDone()){}
-//        return "Done";
-//    }
-
-//    @RequestMapping(value = "/result",method = RequestMethod.GET)
-//    public String taskResult(@RequestParam String taskID){
-//        return String.valueOf(resultSet.get(taskID).getStats().results());
-//    }
 
     private void fill_amqp_uri(Map scenarioConfigMap) {
         logger.info("uri not defined in scenario spec,searching vcap_services...");
