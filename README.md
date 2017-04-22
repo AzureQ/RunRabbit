@@ -5,16 +5,10 @@
 ```batch
 brew install rabbitmq
 ```
-### Backend
 
-```batch
-cd backend
-mvn spring-boot:run
+### Compile
+
 ```
-### UI
-
-```batch
-cd ui
-npm install
-npm start
+mvn clean package
+java -jar target/backend-0.0.1-SNAPSHOT.jar
 ```
