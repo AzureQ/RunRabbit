@@ -25,3 +25,5 @@ nbdist/
 .nb-gradle/
 .DS_Store
 node_modules
+node
+yarn*
