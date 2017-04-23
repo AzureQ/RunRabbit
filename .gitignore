@@ -27,3 +27,8 @@ nbdist/
 node_modules
 node
 yarn*
+parent/
+src/main/js/stylesheets/
+src/main/resources/static/rabbit.png
+src/main/resources/templates/
+src/test/

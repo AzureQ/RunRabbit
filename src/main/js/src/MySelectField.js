@@ -16,12 +16,13 @@ export const renderMenuItems = values => {
 export const MySelectField = props => {
     const myMenuItems = renderMenuItems(props.values);
     return (
-        <div>
+        <div className="SelectFieldDiv">
             <SelectField
                 key={props.info}
                 floatingLabelText={props.info}
                 value={props.value}
                 onChange={props.handler}
+                className="SelectField"
             >
                 {myMenuItems}
             </SelectField>

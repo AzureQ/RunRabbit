@@ -29,31 +29,68 @@ function msgFormatter(cell, row) {
 export const SimpleSummaryCards = props => {
     return (<div>
             <h2>Summary</h2>
-            <CardHeader
-                title="Send Rate"
-                subtitle={largeNumberFormatter(props['data']['send-bytes-rate'] ) + " bytes/sec"}
-                avatar={img_send}
-            />
-            <CardHeader
-                title="Send Rate"
-                subtitle={largeNumberFormatter(props['data']['send-msg-rate']) + " message/sec"}
-                avatar={img_send}
-            />
-            <CardHeader
-                title="Receive Rate"
-                subtitle={largeNumberFormatter(props['data']['recv-bytes-rate']) + " bytes/sec"}
-                avatar={img_recv}
-            />
-            <CardHeader
-                title="Receive Rate"
-                subtitle={largeNumberFormatter(props['data']['recv-msg-rate']) + " messages/sec"}
-                avatar={img_recv}
-            />
-            <CardHeader
-                title="Average Latency"
-                subtitle={largeNumberFormatter(props['data']['avg-latency']) + " microseconds"}
-                avatar={img_heartbeat}
-            />
+            <div className="Summary-card-container">
+                <div className="Summary-card">
+                    <h3>Send Rate</h3>
+                    <p>
+                        {largeNumberFormatter(props['data']['send-bytes-rate']) + " bytes/sec"}
+                    </p>
+                    <p>
+                        {largeNumberFormatter(props['data']['send-msg-rate']) + " message/sec"}
+                    </p>
+                </div>
+            </div>
+            <div className="Summary-card-container">
+                <div className="Summary-card">
+
+                    <h3>Receive Rate</h3>
+                    <p>
+                        {largeNumberFormatter(props['data']['recv-bytes-rate']) + " bytes/sec"}
+                    </p>
+                    <p>
+                        {largeNumberFormatter(props['data']['recv-msg-rate']) + " messages/sec"}
+                    </p>
+                </div>
+            </div>
+            <div className="Summary-card-container">
+                <div className="Summary-card">
+
+                    <h3>Average Latency</h3>
+                    <p>
+                        {largeNumberFormatter(props['data']['avg-latency']) + " microseconds"}
+                    </p>
+
+                </div>
+            </div>
+
+
+
+                {/*<CardHeader*/}
+                    {/*title="Send Rate"*/}
+                    {/*subtitle={largeNumberFormatter(props['data']['send-bytes-rate']) + " bytes/sec"}*/}
+                    {/*avatar={img_send}*/}
+                {/*/>*/}
+                {/*< CardHeader*/}
+                {/*title="Send Rate"*/}
+                {/*subtitle={largeNumberFormatter(props['data']['send-msg-rate']) + " message/sec"}*/}
+                {/*avatar={img_send}*/}
+                {/*/>*/}
+                {/*<CardHeader*/}
+                {/*title="Receive Rate"*/}
+                {/*subtitle={largeNumberFormatter(props['data']['recv-bytes-rate']) + " bytes/sec"}*/}
+                {/*avatar={img_recv}*/}
+                {/*/>*/}
+                {/*<CardHeader*/}
+                {/*title="Receive Rate"*/}
+                {/*subtitle={largeNumberFormatter(props['data']['recv-msg-rate']) + " messages/sec"}*/}
+                {/*avatar={img_recv}*/}
+                {/*/>*/}
+                {/*<CardHeader*/}
+                {/*title="Average Latency"*/}
+                {/*subtitle={largeNumberFormatter(props['data']['avg-latency']) + " microseconds"}*/}
+                {/*avatar={img_heartbeat}*/}
+                {/*/>*/}
+
         </div>
     );
 }
@@ -61,15 +98,40 @@ export const SimpleSummaryCards = props => {
 export const SimpleCharts = props => {
     return (
         <div>
-            <LineChart width={1200} height={300} data={props['data']['samples']||[]}
-                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-                <XAxis dataKey="elapsed"/>
-                <YAxis/>
-                <Tooltip/>
-                <Legend />
-                <Line type="monotone" dataKey="send-msg-rate" stroke="#8884d8" activeDot={{r: 8}}/>
-                <Line type="monotone" dataKey="recv-msg-rate" stroke="#82ca9d"/>
-            </LineChart>
+            <div>
+                <LineChart width={1200} height={300} data={props['data']['samples'] || []}
+                           margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                    <XAxis dataKey="elapsed"/>
+                    <YAxis/>
+                    <Tooltip/>
+                    <Legend />
+                    <Line type="monotone" dataKey="send-msg-rate" stroke="#8884d8" activeDot={{r: 8}}/>
+                    <Line type="monotone" dataKey="recv-msg-rate" stroke="#82ca9d"/>
+                </LineChart>
+            </div>
+            <div>
+                <LineChart width={1200} height={300} data={props['data']['samples'] || []}
+                           margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                    <XAxis dataKey="elapsed"/>
+                    <YAxis/>
+                    <Tooltip/>
+                    <Legend />
+                    <Line type="monotone" dataKey="send-bytes-rate" stroke="#8884d8" activeDot={{r: 8}}/>
+                    <Line type="monotone" dataKey="recv-bytes-rate" stroke="#82ca9d"/>
+                </LineChart>
+            </div>
+            <div>
+                <LineChart width={1200} height={300} data={props['data']['samples'] || []}
+                           margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                    <XAxis dataKey="elapsed"/>
+                    <YAxis/>
+                    <Tooltip/>
+                    <Legend />
+                    <Line type="monotone" dataKey="min-latency" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="avg-latency" stroke="#8884d8" activeDot={{r: 8}}/>
+                    <Line type="monotone" dataKey="max-latency" stroke="#82ca9d" />
+                </LineChart>
+            </div>
         </div>
     );
 

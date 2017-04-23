@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from '../img/logo.svg';
+import logo from '../img/rabbit.png';
 import './App.css';
 import axios from 'axios';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -125,14 +125,15 @@ class App extends Component {
     render() {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme()}>
-                <div id="hehe">
+                <div id="homepage" className="Scenario">
                     <div className="App-header">
+                        <h2>Run! Rabbit!</h2>
                         <img src={logo} className="App-logo" alt="logo"/>
-                        <h2>Welcome to React</h2>
                     </div>
+                    <div className="App-horizontal-bar">Scenario Config</div>
                     <MyParams params={this.state.params} handler={this.handleOnChange}/>
                     <RaisedButton label="Submit" primary={true} onClick={this.handleSubmit}
-                                  disabled={this.state.running}/>
+                                  disabled={this.state.running} className="Button"/>
                     <RefreshIndicator
                         size={25}
                         left={350}
