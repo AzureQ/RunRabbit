@@ -1,3 +1,4 @@
+process.traceDeprecation = true;
 /**
  * Created by Qi on 4/21/17.
  */
@@ -9,7 +10,9 @@ const PATHS = {
     build: path.join(__dirname, 'build')
 };
 
+process.traceDeprecation = true;
 module.exports = {
+
     entry: './src/index.js',
 
     output: {
@@ -19,7 +22,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.jsx|js?$/,
+                test: /\.js?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {

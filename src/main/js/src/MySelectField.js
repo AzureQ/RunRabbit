@@ -23,6 +23,7 @@ export const MySelectField = props => {
                 value={props.value}
                 onChange={props.handler}
                 className="SelectField"
+                disabled={props.disabled}
             >
                 {myMenuItems}
             </SelectField>

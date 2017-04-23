@@ -13,6 +13,16 @@ import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import {MyParams} from './MyParams.js';
 import {SimpleTable, SimpleCharts, SimpleSummaryCards} from './SimpleScenarioResult.js';
 
+const style = {
+    container: {
+        position: 'relative',
+    },
+    refresh: {
+        display: 'inline-block',
+        position: 'relative',
+    },
+};
+
 class App extends Component {
     constructor(props, context) {
         super(props, context);
@@ -131,16 +141,12 @@ class App extends Component {
                         <img src={logo} className="App-logo" alt="logo"/>
                     </div>
                     <div className="App-horizontal-bar">Scenario Config</div>
-                    <MyParams params={this.state.params} handler={this.handleOnChange}/>
-                    <RaisedButton label="Submit" primary={true} onClick={this.handleSubmit}
-                                  disabled={this.state.running} className="Button"/>
-                    <RefreshIndicator
-                        size={25}
-                        left={350}
-                        top={180}
-                        loadingColor="#FF9800"
-                        status={this.state.indicator}
-                    />
+                    <MyParams params={this.state.params} disabled={this.state.running} handler={this.handleOnChange}/>
+                    <div className="Button-container">
+                        <RaisedButton label="Submit" onClick={this.handleSubmit}
+                                      disabled={this.state.running} fullWidth={true} className="Button"/>
+                        <RefreshIndicator loadingColor="#FF9800" status={this.state.indicator} className="Indicator"/>
+                    </div>
                     <Tabs>
                         <Tab label="Summary">
                             <SimpleSummaryCards data={this.state.result}/>
