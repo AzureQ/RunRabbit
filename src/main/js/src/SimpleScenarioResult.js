@@ -29,6 +29,18 @@ function msgFormatter(cell, row) {
 export const SimpleSummaryCards = props => {
     return (<div>
             <h2>Summary</h2>
+
+            <div className="Summary-card-container">
+                <div className="Summary-card">
+
+                    <h3>Scenario Config</h3>
+                    <p>
+                        {JSON.stringify(props['scenario'],null,4)}
+                    </p>
+
+                </div>
+            </div>
+
             <div className="Summary-card-container">
                 <div className="Summary-card">
                     <h3>Send Rate</h3>
@@ -40,6 +52,18 @@ export const SimpleSummaryCards = props => {
                     </p>
                 </div>
             </div>
+
+            <div className="Summary-card-container">
+                <div className="Summary-card">
+
+                    <h3>Average Latency</h3>
+                    <p>
+                        {largeNumberFormatter(props['data']['avg-latency']) + " microseconds"}
+                    </p>
+
+                </div>
+            </div>
+
             <div className="Summary-card-container">
                 <div className="Summary-card">
 
@@ -52,45 +76,6 @@ export const SimpleSummaryCards = props => {
                     </p>
                 </div>
             </div>
-            <div className="Summary-card-container">
-                <div className="Summary-card">
-
-                    <h3>Average Latency</h3>
-                    <p>
-                        {largeNumberFormatter(props['data']['avg-latency']) + " microseconds"}
-                    </p>
-
-                </div>
-            </div>
-
-
-
-                {/*<CardHeader*/}
-                    {/*title="Send Rate"*/}
-                    {/*subtitle={largeNumberFormatter(props['data']['send-bytes-rate']) + " bytes/sec"}*/}
-                    {/*avatar={img_send}*/}
-                {/*/>*/}
-                {/*< CardHeader*/}
-                {/*title="Send Rate"*/}
-                {/*subtitle={largeNumberFormatter(props['data']['send-msg-rate']) + " message/sec"}*/}
-                {/*avatar={img_send}*/}
-                {/*/>*/}
-                {/*<CardHeader*/}
-                {/*title="Receive Rate"*/}
-                {/*subtitle={largeNumberFormatter(props['data']['recv-bytes-rate']) + " bytes/sec"}*/}
-                {/*avatar={img_recv}*/}
-                {/*/>*/}
-                {/*<CardHeader*/}
-                {/*title="Receive Rate"*/}
-                {/*subtitle={largeNumberFormatter(props['data']['recv-msg-rate']) + " messages/sec"}*/}
-                {/*avatar={img_recv}*/}
-                {/*/>*/}
-                {/*<CardHeader*/}
-                {/*title="Average Latency"*/}
-                {/*subtitle={largeNumberFormatter(props['data']['avg-latency']) + " microseconds"}*/}
-                {/*avatar={img_heartbeat}*/}
-                {/*/>*/}
-
         </div>
     );
 }
@@ -127,9 +112,9 @@ export const SimpleCharts = props => {
                     <YAxis/>
                     <Tooltip/>
                     <Legend />
-                    <Line type="monotone" dataKey="min-latency" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="min-latency" stroke="#82ca9d"/>
                     <Line type="monotone" dataKey="avg-latency" stroke="#8884d8" activeDot={{r: 8}}/>
-                    <Line type="monotone" dataKey="max-latency" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="max-latency" stroke="#82ca9d"/>
                 </LineChart>
             </div>
         </div>

@@ -1,0 +1,6 @@
+---
+applications:
+- name: run_rabbit
+  random-route: true
+  path: target/RunRabbit-0.0.1-SNAPSHOT.jar
+  buildpack: java_buildpack_offline

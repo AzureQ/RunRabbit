@@ -45,13 +45,13 @@
 
 .SelectFieldDiv {
     display: inline-block;
-    width: 33.33333333%;
+    width: 25%;
 }
 
 .SelectField {
-    position: relative;
-    top: 50%;
-    left: calc(50% - 128px);
+    display: table !important;
+    margin: 0 auto;
+    width: 60% !important;
 }
 
 .Button-container {
@@ -80,7 +80,7 @@
 .Summary-card-container {
     display: inline-block;
     vertical-align: top;
-    width: 33.33333333%;
+    width: 25%;
     padding: 30px;
     height: 300px;
 }

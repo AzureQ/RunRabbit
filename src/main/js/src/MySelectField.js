@@ -5,16 +5,16 @@ import React from 'react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-export const renderMenuItem = value => {
-    return (<MenuItem key={value} value={value} primaryText={value}/>);
+export const renderMenuItem = props => {
+    return (<MenuItem key={props['value']} value={props['value']} primaryText={props['text']}/>);
 }
 
-export const renderMenuItems = values => {
-    return(values.map(v => renderMenuItem(v)));
+export const renderMenuItems = props => {
+    return(props.map(v => renderMenuItem(v)));
 }
 
 export const MySelectField = props => {
-    const myMenuItems = renderMenuItems(props.values);
+    const myMenuItems = renderMenuItems(props['values']);
     return (
         <div className="SelectFieldDiv">
             <SelectField
