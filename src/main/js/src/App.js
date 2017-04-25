@@ -1,17 +1,16 @@
-import React, {Component} from 'react';
-import logo from '../img/rabbit.png';
-import './App.css';
-import axios from 'axios';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import RaisedButton from 'material-ui/RaisedButton';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import React, {Component} from "react";
+import "./App.css";
+import axios from "axios";
+import {Tab, Tabs} from "material-ui/Tabs";
+import RaisedButton from "material-ui/RaisedButton";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import RefreshIndicator from "material-ui/RefreshIndicator";
+import injectTapEventPlugin from "react-tap-event-plugin";
+import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
+import {MyParamList} from "./MyParamList.js";
+import {SimpleCharts, SimpleSummaryCards, SimpleTable} from "./SimpleScenarioResult.js";
 const stompClient = require('./websocket-listener');
-import RefreshIndicator from 'material-ui/RefreshIndicator';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
-import {MyParamList} from './MyParamList.js';
-import {SimpleTable, SimpleCharts, SimpleSummaryCards} from './SimpleScenarioResult.js';
 
 class App extends Component {
     constructor(props, context) {
@@ -21,6 +20,8 @@ class App extends Component {
 
         this.state = {
             running: false,
+            btncls: "Button",
+            indcls: "IndicatorDisappear",
             indicator: "hide",
             result: {},
             params: this.props.params
@@ -46,7 +47,9 @@ class App extends Component {
 
     handleResult(message) {
         this.setState({running: false});
-        this.setState({indicator: "hide"})
+        this.setState({indicator: "hide"});
+        this.setState({indcls: "IndicatorDisappear"});
+        this.setState({btncls: "Button"});
         this.setState({result: JSON.parse(message.body)});
         console.log(this.state.result);
     }
@@ -70,6 +73,8 @@ class App extends Component {
         axios.post('/submit', component.scenarioBuilder())
             .then(function (response) {
                 component.setState({running: true});
+                component.setState({btncls: "ButtonDisappear"});
+                component.setState({indcls: "Indicator"});
                 component.setState({indicator: "loading"})
             })
             .catch(function (error) {
@@ -83,16 +88,19 @@ class App extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme()}>
                 <div id="homepage" className="Scenario">
                     <div className="App-header">
-                        <h2>Run! Rabbit!</h2>
-                        <img src={logo} className="App-logo" alt="logo"/>
+                        <div className='rabbit'/>
+                        <div className='clouds'/>
                     </div>
                     <div className="App-horizontal-bar">Scenario Config</div>
                     <MyParamList params={this.state.params} disabled={this.state.running}
                                  handler={this.handleOnChange}/>
                     <div className="Button-container">
                         <RaisedButton label="Submit" onClick={this.handleSubmit}
-                                      disabled={this.state.running} fullWidth={true} className="Button"/>
-                        <RefreshIndicator loadingColor="#FF9800" status={this.state.indicator} className="Indicator"/>
+                                      disabled={this.state.running} fullWidth={true} className={this.state.btncls}>
+                        </RaisedButton>
+                        <RefreshIndicator size={40}
+                                          left={-20}
+                                          top={-20} loadingColor="#FF9800" status={this.state.indicator} className={this.state.indcls}/>
                     </div>
                     <Tabs>
                         <Tab label="Summary">

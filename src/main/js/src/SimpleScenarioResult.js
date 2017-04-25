@@ -28,19 +28,6 @@ function msgFormatter(cell, row) {
 
 export const SimpleSummaryCards = props => {
     return (<div>
-            <h2>Summary</h2>
-
-            <div className="Summary-card-container">
-                <div className="Summary-card">
-
-                    <h3>Scenario Config</h3>
-                    <p>
-                        {JSON.stringify(props['scenario'],null,4)}
-                    </p>
-
-                </div>
-            </div>
-
             <div className="Summary-card-container">
                 <div className="Summary-card">
                     <h3>Send Rate</h3>
@@ -83,38 +70,38 @@ export const SimpleSummaryCards = props => {
 export const SimpleCharts = props => {
     return (
         <div>
-            <div>
-                <LineChart width={1200} height={300} data={props['data']['samples'] || []}
-                           margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+            <div className="Chart-container">
+                <h3 className="ChartHeader">Send vs Receive (message/second)</h3>
+                <LineChart width={1200} height={300} data={props['data']['samples'] || []} className="Chart">
                     <XAxis dataKey="elapsed"/>
                     <YAxis/>
                     <Tooltip/>
                     <Legend />
-                    <Line type="monotone" dataKey="send-msg-rate" stroke="#8884d8" activeDot={{r: 8}}/>
-                    <Line type="monotone" dataKey="recv-msg-rate" stroke="#82ca9d"/>
+                    <Line type="monotone" dataKey="send-msg-rate" name="Send Rate" stroke="#8884d8" activeDot={{r: 8}}/>
+                    <Line type="monotone" dataKey="recv-msg-rate" name="Receive Rate" stroke="#82ca9d"/>
                 </LineChart>
             </div>
-            <div>
-                <LineChart width={1200} height={300} data={props['data']['samples'] || []}
-                           margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+            <div className="Chart-container">
+                <h3 className="ChartHeader">Send vs Receive (bytes/second)</h3>
+                <LineChart width={1200} height={300} data={props['data']['samples'] || []} className="Chart">
                     <XAxis dataKey="elapsed"/>
                     <YAxis/>
                     <Tooltip/>
                     <Legend />
-                    <Line type="monotone" dataKey="send-bytes-rate" stroke="#8884d8" activeDot={{r: 8}}/>
-                    <Line type="monotone" dataKey="recv-bytes-rate" stroke="#82ca9d"/>
+                    <Line type="monotone" dataKey="send-bytes-rate" name="Send Rate" stroke="#8884d8" activeDot={{r: 8}}/>
+                    <Line type="monotone" dataKey="recv-bytes-rate" name="Receive Rate" stroke="#82ca9d"/>
                 </LineChart>
             </div>
-            <div>
-                <LineChart width={1200} height={300} data={props['data']['samples'] || []}
-                           margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+            <div className="Chart-container">
+                <h3 className="ChartHeader">Latency (μs)</h3>
+                <LineChart width={1200} height={300} data={props['data']['samples'] || []} className="Chart">
                     <XAxis dataKey="elapsed"/>
                     <YAxis/>
                     <Tooltip/>
                     <Legend />
-                    <Line type="monotone" dataKey="min-latency" stroke="#82ca9d"/>
-                    <Line type="monotone" dataKey="avg-latency" stroke="#8884d8" activeDot={{r: 8}}/>
-                    <Line type="monotone" dataKey="max-latency" stroke="#82ca9d"/>
+                    <Line type="monotone" dataKey="min-latency" name="Min Latency" stroke="#82ca9d"/>
+                    <Line type="monotone" dataKey="avg-latency" name="Avg Latency" stroke="#8884d8" activeDot={{r: 5}}/>
+                    <Line type="monotone" dataKey="max-latency" name="Max Latency" stroke="#FF0066"/>
                 </LineChart>
             </div>
         </div>
@@ -124,7 +111,7 @@ export const SimpleCharts = props => {
 
 export const SimpleTable = props => {
     return (
-        <div>
+        <div className="Table-container">
             <BootstrapTable data={props['data']['samples'] || []} hover>
                 <TableHeaderColumn dataAlign="center" isKey
                                    dataField='elapsed'>Elapsed</TableHeaderColumn>

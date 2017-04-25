@@ -52,12 +52,12 @@ const parameters = {
         "values": [1000, 2000, 3000, 4000, 5000].map(v => pairMaker({value: v, scale: 0.001}))
     },
     "consumer-rate-limit": {
-        "label": "Consumer Rate Limit (msg/second)",
+        "label": "Consumer Rate (msg/sec)",
         "default": 0,
         "values": [0, 1000, 2000, 3000, 4000, 5000].map(v => pairMaker({value: v}))
     },
     "producer-rate-limit": {
-        "label": "Producer Rate Limit (msg/second)",
+        "label": "Producer Rate (msg/sec)",
         "default": 0,
         "values": [0, 1000, 2000, 3000, 4000, 5000].map(v => pairMaker({value: v}))
     }

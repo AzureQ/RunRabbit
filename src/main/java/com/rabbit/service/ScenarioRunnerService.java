@@ -25,12 +25,12 @@ public class ScenarioRunnerService {
 
     @Async
     public Future<Map> runScenario(String taskID, Scenario scenario, Map resultSet) throws Exception {
-        logger.info("Task "+taskID+" started!");
+        logger.info("Task " + taskID + " started!");
         scenario.run();
-        logger.info("Task "+taskID+" finished!");
-        logger.info("Task "+taskID+" results: "+ scenario.getStats().results());
-        webSocket.convertAndSend("/topic/taskstatus",scenario.getStats().results());
-        resultSet.put(taskID,scenario);
+        logger.info("Task " + taskID + " finished!");
+        logger.info("Task " + taskID + " results: " + scenario.getStats().results());
+        webSocket.convertAndSend("/topic/taskstatus", scenario.getStats().results());
+        resultSet.put(taskID, scenario);
         return new AsyncResult<>(resultSet);
     }
 }
