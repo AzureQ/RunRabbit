@@ -7,23 +7,34 @@
 brew install rabbitmq
 ```
 
-#### 2 Compile
+#### 2 Edit application.properties
 
+Update src/main/resources/application.properties
 ```batch
-cd RunRabbit
-mvn clean package
+spring.profiles.active=rabbitmq-local
+```
+
+#### 3 Run
+```batch
 mvn spring-boot:run
 ```
 
 
 ### Cloud Foundry
 
-#### 1 Compile
+#### 1 Edit application.properties
+
+Update src/main/resources/application.properties 
+```batch
+spring.profiles.active=rabbitmq-cloud
+```
+
+#### 2 Compile
 ```batch
 mvn clean package
 ```
 
-#### 2 Push to Cloud Foundry
+#### 3 Push to Cloud Foundry
 ```batch
 cf push
 cf bind-service <app name in the manifest.yml> <rabbitmq servie instance>
