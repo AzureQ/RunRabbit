@@ -1,32 +1,33 @@
 /**
  * Created by Qi on 4/14/17.
  */
-import React from 'react';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import React from "react";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
 
-export const renderMenuItem = props => {
-    return (<MenuItem key={props['value']} value={props['value']} primaryText={props['text']}/>);
-}
 
-export const renderMenuItems = props => {
-    return(props.map(v => renderMenuItem(v)));
-}
+const MySelectField = props => {
 
-export const MySelectField = props => {
-    const myMenuItems = renderMenuItems(props['values']);
+    const renderMenuItems = items => {
+        return (items.map(item => {
+            return (<MenuItem key={item['value']} value={item['value']} primaryText={item['text']}/>);
+        }));
+    };
+
     return (
         <div className="SelectFieldDiv">
             <SelectField
-                key={props['info']}
-                floatingLabelText={props['info']}
+                key={props['label']}
+                floatingLabelText={props['label']}
                 value={props['value']}
                 onChange={props['handler']}
                 className="SelectField"
                 disabled={props['disabled']}
             >
-                {myMenuItems}
+                {renderMenuItems(props['values'])}
             </SelectField>
         </div>
     );
-}
+};
+
+export default MySelectField;

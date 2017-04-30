@@ -9,9 +9,9 @@ import RefreshIndicator from "material-ui/RefreshIndicator";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import "react-bootstrap-table/dist/react-bootstrap-table.min.css";
 import {SimpleCharts, SimpleSummaryCards, SimpleTable} from "./SimpleScenarioResult.js";
-import {MyCardList} from "./MyCardList.js";
-const stompClient = require('./websocket-listener');
+import MyCardList from "./MyCardList.js";
 
+const stompClient = require('./websocket-listener');
 
 class App extends Component {
     constructor(props, context) {

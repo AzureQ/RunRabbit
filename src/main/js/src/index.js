@@ -74,9 +74,18 @@ const parameters = {
         "values": [-1, 1].map(v => binaryPairMaker({value: v}))
     },
     "auto-ack": {
-        "label": "Consumer Acknowledgement",
+        "label": "Consumer Acknowledgement Mode",
         "default": false,
-        "values": [false, true].map(v => binaryPairMaker({value: v}))
+        "values": [
+        {
+            "value": false,
+            "text": "Explicit"
+        },
+        {
+            "value": true,
+            "text": "Auto"
+        }
+    ]
     }
 }
 
