@@ -18,12 +18,12 @@ export const MySelectField = props => {
     return (
         <div className="SelectFieldDiv">
             <SelectField
-                key={props.info}
-                floatingLabelText={props.info}
-                value={props.value}
-                onChange={props.handler}
+                key={props['info']}
+                floatingLabelText={props['info']}
+                value={props['value']}
+                onChange={props['handler']}
                 className="SelectField"
-                disabled={props.disabled}
+                disabled={props['disabled']}
             >
                 {myMenuItems}
             </SelectField>
